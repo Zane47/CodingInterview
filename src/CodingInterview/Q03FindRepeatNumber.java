@@ -45,6 +45,7 @@ public class Q03FindRepeatNumber {
             // 如果不相等，那么查看第i个数和第m个是否相等
             // 如果还不相等，那么就交换把第i个数交换到第m个位置上（因为数字就是m，理应在第m位上），然后下一轮
             for (int i = 0; i < nums.length; i++) {
+                // 注意这里是while，一直等到i找到自己的位置
                 while (i != nums[i]) {
                     // 不相等
                     if (nums[i] == nums[nums[i]]) {
