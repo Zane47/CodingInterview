@@ -28,13 +28,22 @@ public class Q04FindNumberIn2DArray {
     public static void main(String[] args) {
         Solution solution = new Solution();
         // n * m
-        int[][] matrix = new int[][] {
+        /*int[][] matrix = new int[][] {
                 {1, 4, 7, 11, 15},
                 {2, 5, 8, 12, 19},
                 {3, 6, 9, 16, 22},
                 {10, 13, 14, 17, 24},
                 {18, 21, 23, 26, 30},
                 {20, 22, 24, 26, 28}
+        };*/
+
+
+        int[][] matrix = new int[][] {
+                {1,4,7,11,15},
+                {2,5,8,12,19},
+                {3,6,9,16,22},
+                {10,13,14,17,24},
+                {18,21,23,26,30}
         };
 
         int target = 5;
@@ -43,14 +52,73 @@ public class Q04FindNumberIn2DArray {
         System.out.println(solution.findNumberIn2DArray(matrix, target));
     }
 
-
     /**
+     * 从右上角开始找起
+     * (i) 如果该数字等于target，return
+     * (ii) 如果该数字大于target，则剔除该数字所在的列
+     * (iii) 如果该数字小于target，则剔除该数字所在的行
+     */
+    static class Solution {
+        public boolean findNumberIn2DArray(int[][] matrix, int target) {
+            if (matrix.length == 0 || matrix[0].length == 0) {
+                return false;
+            }
+            int rows = matrix.length;
+            int cols = matrix[0].length;
+
+            // 右上角
+            int row = 0;
+            int col = cols - 1;
+
+            while (row < rows && col >= 0) {
+                if (matrix[row][col] == target) {
+                    return true;
+                }
+                else if (matrix[row][col] > target) {
+                    col--;
+                }
+                else {
+                    // matrix[row][col] < target
+                    row++;
+
+                }
+            }
+            return false;
+        }
+    }
+    /**暴力
+     * O(nm)
+     */
+    static class Solution1 {
+        public boolean findNumberIn2DArray(int[][] matrix, int target) {
+            if (matrix.length == 0 || matrix[0].length == 0) {
+                return false;
+            }
+            int rows = matrix.length;
+            int cols = matrix[0].length;
+            for (int i = 0 ; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if (matrix[i][j] == target) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    }
+
+    /** 废弃
      * 行和列都是递增的
      * 先确定在哪一列，然后再确定在这一行的具体位置
      * 有序，用二分查找
      * 找列的时候找比target小的最大的数字
+     *
+     * 但是有可能有多行的第一个数字比target小，那都要确认
+     *
+     *
+     * obsolete
      */
-    static class Solution {
+    static class ObsoleteSolution {
         public boolean findNumberIn2DArray(int[][] matrix, int target) {
             int row = matrix.length;
             int col = matrix[0].length;
@@ -59,9 +127,15 @@ public class Q04FindNumberIn2DArray {
             for (int i = 0; i < row; i++) {
                 colArray[i] = matrix[i][0];
             }
-
-
+            // 先确定列
             int colIndex = binarySearch(colArray, target);
+
+            if (colArray[colIndex] == target) {
+                return true;
+            }
+            else {
+
+            }
 
             return false;
         }
@@ -84,12 +158,12 @@ public class Q04FindNumberIn2DArray {
                     left = mid + 1;
                 }
                 else {
+                    // 找到了
                     return mid;
                 }
             }
-
-
-            return 0;
+            // right < left，若没找到则返回比他小的位置
+            return right;
         }
 
     }
