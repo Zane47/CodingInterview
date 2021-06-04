@@ -1,5 +1,6 @@
 package CodingInterview;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -26,10 +27,61 @@ public class Q06ReversePrint {
     }
 
     /**
+     * 能用栈，也能用递归
+     * 但是注意层数过多可能会栈溢出
+     *
+     */
+    static class Solution {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
+        public int[] reversePrint(ListNode head) {
+            recur(head);
+
+            int[] result = new int[arrayList.size()];
+            for (int i = 0; i < arrayList.size(); i++) {
+                result[i] = arrayList.get(i);
+            }
+
+            return result;
+        }
+        private void recur(ListNode head) {
+            if (head == null) {
+                return;
+            }
+            recur(head.next);
+            arrayList.add(head.val);
+        }
+
+    }
+
+
+    /**
+     * 遍历两次链表
+     */
+    static class Solution2 {
+        public int[] reversePrint(ListNode head) {
+            ListNode node = head;
+            int count = 0;
+            while (null != node) {
+                count++;
+                node = node.next;
+            }
+            int[] result = new int[count];
+
+            for (int i = count - 1; i >= 0; i--) {
+                result[i] = head.val;
+                head = head.next;
+            }
+
+            return result;
+        }
+    }
+
+    /**
      * 单链表倒序输出
      * 栈，先进后出
      */
-    static class Solution {
+    static class Solution1 {
         public int[] reversePrint(ListNode head) {
             Stack<Integer> stack = new Stack<>();
             while (head != null) {
