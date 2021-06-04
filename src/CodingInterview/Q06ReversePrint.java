@@ -1,6 +1,5 @@
 package CodingInterview;
 
-import java.util.List;
 import java.util.Stack;
 
 /**
@@ -24,8 +23,6 @@ public class Q06ReversePrint {
 
         Solution solution = new Solution();
         solution.reversePrint(head);
-
-        int a = 0;
     }
 
     /**
@@ -41,7 +38,8 @@ public class Q06ReversePrint {
             }
             int[] result = new int[stack.size()];
 
-            for (int i = 0; i < stack.size(); i++) {
+            // 这里是result.length，不是stack.size(会变)
+            for (int i = 0; i < result.length; i++) {
                 result[i] = stack.pop();
             }
 
