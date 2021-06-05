@@ -83,8 +83,7 @@ public class Q07BuildTree {
          * @param right
          */
         private int[] slice(int[] array, int left, int right) {
-            int[] result = Arrays.copyOfRange(array, left, right);;
-            return result;
+            return Arrays.copyOfRange(array, left, right);
         }
 
 
