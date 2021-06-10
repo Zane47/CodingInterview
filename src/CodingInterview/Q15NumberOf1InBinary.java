@@ -28,7 +28,23 @@ public class Q15NumberOf1InBinary {
         System.out.println(new Solution().hammingWeight(11110011));
     }
 
-    /**考察知识点：二进制和位运算
+    static class Solution {
+        // you need to treat n as an unsigned value
+        public int hammingWeight(int n) {
+            int result = 0;
+
+
+
+
+            return result;
+        }
+    }
+
+
+
+
+    /** n&1
+     * 考察知识点：二进制和位运算
      * 这里把数字当成无符号数，无符号右移
      *
      * n & 1 == 0, 最右一位是0
@@ -37,7 +53,7 @@ public class Q15NumberOf1InBinary {
      *
      */
 
-    static class Solution {
+    static class Solution1 {
         // you need to treat n as an unsigned value
         public int hammingWeight(int n) {
             int result = 0;
