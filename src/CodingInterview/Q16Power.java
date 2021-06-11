@@ -28,36 +28,53 @@ package CodingInterview;
 public class Q16Power {
 
     public static void main(String[] args) {
+        System.out.println(new Solution().myPow(2.0, 11));
+
         System.out.println(new Solution().myPow(2, 10));
         System.out.println(new Solution().myPow(2.1, 3));
 
         System.out.println(new Solution().myPow(0.00001, 2147483647));
+        System.out.println(new Solution().myPow(2.0, -2147483648));
     }
 
 
     /**
      * 快速幂：迭代
-     * 首先处理一下n为负数的情况，把x取一下倒数并且把n变为正数即可
+     * 要求x^11, 正常的乘积需要循环乘11次，时间复杂度为O(n)
      *
-     * 接下来以n = 18为例解释一下迭代的过程
-     * 18 的二进制数为 0b10010
-     * x^18 = x^16 * x^2 = x^0b10000 * x^0b10
+     * 快速幂的思想就是将指数11 可以转成二进制数1011，则
+     * 原来的式子可以转化成
+     * 此时只运算了3次乘积，时间复杂度降至O(logn)
      *
-     * 令循环体为 x *= x，n >>= 1
-     * 循环1次, 可以得到x ^ 2
-     * 循环2次, n为奇数，把这个x ^ 2 乘到结果中
-     * 循环4次, 得到x^16
-     * 循环5次, n为奇数，把x^16乘到结果中
-     * 也就是n的二进制数中有几个1就会乘几次，且乘数在循环中一次一次倍增
+     * 下方代码中的x *= x是一个累乘的过程，得到四位二进制数，对应的四个权重，
      *
-     * 因为Java会溢出的问题，用一个long类型的变量b来代替n
+     *
+     * 1011二进制数，从右至左分别为1 1 0 1 ，只有在1的位置上，才有相应的权重，这也就是为什么需要通过与运算：(b & 1) == 1判断最后一位是否为1。
+     *
+     *
+     *
+     * 最终的结果就是将每一位的1 所对应的权重相乘即可：
      */
-
     static class Solution {
         public double myPow(double x, int n) {
             double result = 1.0;
-
-
+            // -2147483648超过int了
+            long b = n;
+            if (Math.abs(x - 0.0) < 1e-6) {
+                return 0;
+            }
+            if (b < 0) {
+                x = 1 / x;
+                b = -b;
+            }
+            while (b > 0) {
+                // 最右一位为1，需要乘上该位上的权重
+                if ((b & 1) == 1) {
+                    result *= x;
+                }
+                x *= x;
+                b >>= 1;
+            }
 
             return result;
         }
