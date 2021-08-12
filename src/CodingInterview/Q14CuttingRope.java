@@ -51,6 +51,8 @@ public class Q14CuttingRope {
             for (int i = 3; i < n + 1; i++) {
                 for (int j = 2; j < i / 2 + 1; j++) {
                     // 这里没有必要j < i， 前半段和后半段是一样的，比如 7切分为 3，4 和切分为 4，3 是一样的，j<=i/2
+
+                    // 右边要和dp[i]求最值，因为dp[i]就是上一轮更新后乘积的最大值，如果不和dp[i]比较的话，那么得到的就不是全局范围内的最大值
                     int tmp = Math.max(j * (i - j), j * dp[i - j]);
                     dp[i] = Math.max(dp[i], tmp);
                 }
