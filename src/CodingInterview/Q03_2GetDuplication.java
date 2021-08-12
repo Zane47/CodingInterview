@@ -11,7 +11,7 @@ package CodingInterview;
  */
 
 
-public class Q0302GetDuplication {
+public class Q03_2GetDuplication {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
