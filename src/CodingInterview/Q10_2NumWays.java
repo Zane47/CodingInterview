@@ -18,7 +18,7 @@ package CodingInterview;
  * 输出：1
  */
 
-public class Q1002NumWays {
+public class Q10_2NumWays {
 
     public static void main(String[] args) {
         System.out.println(new Solution().numWays(7));
