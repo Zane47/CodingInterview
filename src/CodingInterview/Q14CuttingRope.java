@@ -50,6 +50,7 @@ public class Q14CuttingRope {
             dp[2] = 1;
             for (int i = 3; i < n + 1; i++) {
                 for (int j = 2; j < i / 2 + 1; j++) {
+                    // 这里没有必要j < i， 前半段和后半段是一样的，比如 7切分为 3，4 和切分为 4，3 是一样的，j<=i/2
                     int tmp = Math.max(j * (i - j), j * dp[i - j]);
                     dp[i] = Math.max(dp[i], tmp);
                 }
@@ -59,17 +60,30 @@ public class Q14CuttingRope {
     }
 
 
-    /**贪心
+    /**
+     * 贪心，尽可能把绳子分成长度为3的小段，这样乘积最大
+     * 这里用到数学知识：https://leetcode-cn.com/problems/jian-sheng-zi-lcof/solution/mian-shi-ti-14-i-jian-sheng-zi-tan-xin-si-xiang-by/
+     * 步骤如下：
      *
-     *
-     *
+     * 如果 n == 2，返回1，如果 n == 3，返回2，两个可以合并成n小于4的时候返回n - 1
+     * 如果 n == 4，返回4
+     * 如果 n > 4，分成尽可能多的长度为3的小段，每次循环长度n减去3，乘积res乘以3；最后返回时乘以小于等于4的最后一小段
+     * 以上2和3可以合并
      */
     static class Solution {
         public int cuttingRope(int n) {
-
-
-
-            return 0;
+            if (n == 2) {
+                return 1;
+            }
+            if (n == 3) {
+                return 2;
+            }
+            int result = 1;
+            while (n > 4) {
+                result *= 3;
+                n -= 3;
+            }
+            return result *n;
         }
     }
 
