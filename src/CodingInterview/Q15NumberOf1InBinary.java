@@ -36,6 +36,8 @@ public class Q15NumberOf1InBinary {
 
 
 
+
+
             return result;
         }
     }

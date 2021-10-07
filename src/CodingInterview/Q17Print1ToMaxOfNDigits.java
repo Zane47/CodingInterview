@@ -51,6 +51,7 @@ public class Q17Print1ToMaxOfNDigits {
 
             for (int digit = 1; digit <= n; digit++) {
                 for (char firstDigit = '1'; firstDigit <= '9'; firstDigit++) {
+
                     char[] nums = new char[digit];
                     nums[0] = firstDigit;
                     dfs(1, nums, digit);
